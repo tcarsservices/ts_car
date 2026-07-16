@@ -1,1 +1,60 @@
- 
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0d0d0d;
+color:white;
+text-align:center;
+}
+
+header{
+padding:40px 20px;
+}
+
+.logo{
+width:180px;
+border-radius:15px;
+}
+
+h1{
+color:#1e90ff;
+font-size:36px;
+}
+
+p{
+font-size:18px;
+color:#ddd;
+}
+
+.buttons{
+margin:30px 0;
+}
+
+.buttons a{
+display:inline-block;
+margin:10px;
+padding:14px 24px;
+background:#007bff;
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:bold;
+}
+
+section{
+padding:40px 20px;
+}
+
+.card{
+background:#1b1b1b;
+margin:15px auto;
+padding:20px;
+border-radius:12px;
+max-width:500px;
+border:1px solid #007bff;
+}
+
+footer{
+padding:20px;
+background:#111;
+color:#888;
+}
