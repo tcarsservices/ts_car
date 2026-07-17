@@ -1,57 +1,139 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>التقني لخدمات السيارات</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05070b" />
+  <title>TS Car - التقني لخدمات السيارات</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a class="brand" href="#home">
+        <div class="brand-icon">TS</div>
+        <div>
+          <strong>TS Car</strong>
+          <span>التقني لخدمات السيارات</span>
+        </div>
+      </a>
 
-<header>
+      <div class="nav-links">
+        <a href="#home">الرئيسية</a>
+        <a href="#services">الخدمات</a>
+        <a href="#contact">تواصل معنا</a>
+      </div>
 
-<img src="logo.jpg" class="logo">
+      <a class="nav-call" href="tel:+9647739636173">اتصل الآن</a>
+    </div>
+  </nav>
 
-<h1>التقني لخدمات السيارات</h1>
+  <header class="hero" id="home">
+    <div class="hero-grid"></div>
+    <div class="container hero-content">
+      <div class="hero-text reveal">
+        <span class="small-title">مركز متخصص لخدمات السيارات في الموصل</span>
+        <h1>عناية احترافية<br />لسيارتك في <span>TS Car</span></h1>
+        <p>
+          خبرة ودقة وأجهزة حديثة لخدمة سيارتك، من فحص الكمبيوتر
+          وتبديل الزيوت إلى TPMS والإطارات وهيدروليك الكير.
+        </p>
 
-<p>خبرة وتقنية لخدمة سيارتك</p>
+        <div class="hero-buttons">
+          <a class="button primary" href="https://wa.me/9647739636173" target="_blank" rel="noopener">واتساب مباشر</a>
+          <a class="button secondary" href="#services">شاهد خدماتنا</a>
+          <a class="button secondary" href="https://waze.com/ul/hsyqwymh5f" target="_blank" rel="noopener">افتح الموقع في Waze</a>
+        </div>
+      </div>
 
-<div class="buttons">
+      <div class="hero-card reveal" aria-label="هوية TS Car">
+        <div class="car-light"></div>
+        <div class="car-shape">
+          <div class="car-roof"></div>
+          <div class="car-body"></div>
+          <div class="wheel wheel-left"></div>
+          <div class="wheel wheel-right"></div>
+        </div>
+        <h2>التقني لخدمات السيارات</h2>
+        <p>جودة • ثقة • احترافية</p>
+      </div>
+    </div>
+  </header>
 
-<a href="tel:07739636173">📞 اتصال</a>
+  <main>
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <span>خدماتنا</span>
+            <h2>كل ما تحتاجه سيارتك</h2>
+          </div>
+          <p>اضغط على أي خدمة حتى تشوف التفاصيل والصور الخاصة بيها.</p>
+        </div>
 
-<a href="https://wa.me/9647739636173">💬 واتساب</a>
+        <div class="services-grid" id="servicesGrid"></div>
+      </div>
+    </section>
 
-<a href="https://waze.com/ul/hsyqwymh5f">📍 الموقع</a>
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-card reveal">
+          <div>
+            <span class="contact-label">تواصل معنا</span>
+            <h2>نحن قريبون منك</h2>
 
-</div>
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div>
+                <strong>العنوان</strong>
+                <p>الموصل – حي المثنى – مقابل مطعم سبايسي</p>
+              </div>
+            </div>
 
-</header>
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div>
+                <strong>رقم الهاتف</strong>
+                <p>0773 963 6173</p>
+              </div>
+            </div>
+          </div>
 
-<section>
+          <div class="contact-buttons">
+            <a class="button primary" href="tel:+9647739636173">اتصال مباشر</a>
+            <a class="button whatsapp" href="https://wa.me/9647739636173" target="_blank" rel="noopener">مراسلة واتساب</a>
+            <a class="button secondary" href="https://waze.com/ul/hsyqwymh5f" target="_blank" rel="noopener">فتح الموقع في Waze</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<h2>خدماتنا</h2>
+  <footer class="footer">
+    <p>© 2026 TS Car – التقني لخدمات السيارات</p>
+    <a class="admin-link" href="admin.html">إدارة الصيانة</a>
+  </footer>
 
-<div class="card">🔍 فحص كمبيوتر</div>
+  <div class="floating-buttons">
+    <a class="floating whatsapp-float" href="https://wa.me/9647739636173" target="_blank" rel="noopener">واتساب</a>
+    <a class="floating phone-float" href="tel:+9647739636173">اتصال</a>
+  </div>
 
-<div class="card">🛞 برمجة حساسات TPMS</div>
+  <div class="modal" id="serviceModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" type="button" data-close-modal aria-label="إغلاق">×</button>
+      <div class="modal-icon" id="modalIcon">🖥️</div>
+      <h3 id="modalTitle">الخدمة</h3>
+      <p id="modalDescription"></p>
+      <div class="modal-gallery" id="modalGallery"></div>
+      <div class="modal-actions">
+        <a class="button primary" href="tel:+9647739636173">اتصل للاستفسار</a>
+        <a class="button whatsapp" href="https://wa.me/9647739636173" target="_blank" rel="noopener">واتساب</a>
+      </div>
+    </div>
+  </div>
 
-<div class="card">🛢️ تغيير الزيوت والفلاتر</div>
-
-<div class="card">🔋 البطاريات</div>
-
-<div class="card">🛞 الإطارات والنيتروجين</div>
-
-<div class="card">🧼 تنظيف المحرك</div>
-
-</section>
-
-<footer>
-
-التقني لخدمات السيارات © 2026
-
-</footer>
-
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05070b" />
+  <title>إدارة صيانة TS Car</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="login-screen" id="loginScreen">
+    <form class="login-card" id="loginForm">
+      <div class="logo">TS</div>
+      <h1>لوحة إدارة TS Car</h1>
+      <p>أدخل كلمة المرور للدخول</p>
+      <input id="passwordInput" type="password" placeholder="كلمة المرور" autocomplete="current-password" required />
+      <button type="submit">دخول</button>
+      <span class="error" id="loginError"></span>
+    </form>
+  </div>
+
+  <div class="app hidden" id="adminApp">
+    <header class="topbar">
+      <div>
+        <h1>إدارة الزبائن والصيانة</h1>
+        <p>TS Car – التقني لخدمات السيارات</p>
+      </div>
+      <div class="top-actions">
+        <a href="index.html">الموقع الرئيسي</a>
+        <button id="logoutBtn" class="danger-outline">خروج</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel form-panel">
+        <div class="panel-head">
+          <h2 id="formTitle">إضافة سجل صيانة جديد</h2>
+          <button id="resetBtn" type="button" class="ghost">تفريغ الحقول</button>
+        </div>
+
+        <form id="serviceForm">
+          <input type="hidden" id="recordId" />
+
+          <div class="grid">
+            <label>اسم الزبون
+              <input id="customerName" required placeholder="مثال: أحمد محمد" />
+            </label>
+
+            <label>رقم الهاتف
+              <input id="phone" inputmode="tel" placeholder="07xxxxxxxxx" />
+            </label>
+
+            <label>نوع السيارة
+              <input id="carType" required placeholder="مثال: تويوتا كامري" />
+            </label>
+
+            <label>الموديل
+              <input id="carModel" placeholder="مثال: 2021" />
+            </label>
+
+            <label>رقم السيارة
+              <input id="plateNumber" placeholder="رقم اللوحة أو رقم مميز" />
+            </label>
+
+            <label>تاريخ الصيانة
+              <input id="serviceDate" type="date" required />
+            </label>
+
+            <label>عداد السيارة
+              <input id="mileage" type="number" min="0" placeholder="مثال: 85000" />
+            </label>
+
+            <label>نوع الزيت
+              <input id="oilType" placeholder="مثال: 5W-30" />
+            </label>
+
+            <label>عدد اللترات
+              <input id="liters" type="number" step="0.1" min="0" placeholder="مثال: 4.5" />
+            </label>
+
+            <label>السعر بالدينار
+              <input id="price" type="number" min="0" placeholder="مثال: 65000" />
+            </label>
+
+            <label class="wide">ما تم تبديله
+              <textarea id="replacedParts" rows="3" placeholder="فلتر زيت، فلتر هواء، هيدروليك كير..."></textarea>
+            </label>
+
+            <label class="wide">تفاصيل آخر صيانة
+              <textarea id="lastService" rows="3" placeholder="اكتب كل تفاصيل العمل المنجز"></textarea>
+            </label>
+
+            <label class="wide">ملاحظات
+              <textarea id="notes" rows="3" placeholder="ملاحظات إضافية أو موعد الصيانة القادمة"></textarea>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary">حفظ السجل</button>
+            <button type="button" id="printCurrentBtn" class="secondary">طباعة السجل الحالي</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel records-panel">
+        <div class="panel-head records-head">
+          <h2>سجلات الصيانة</h2>
+          <span id="recordCount">0 سجل</span>
+        </div>
+
+        <div class="search-row">
+          <input id="searchInput" placeholder="بحث باسم الزبون، الهاتف، السيارة أو رقم اللوحة" />
+          <button id="exportBtn" class="secondary">تصدير نسخة احتياطية</button>
+          <label class="import-label">استيراد نسخة
+            <input id="importInput" type="file" accept="application/json" hidden />
+          </label>
+        </div>
+
+        <div class="records" id="recordsContainer"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
