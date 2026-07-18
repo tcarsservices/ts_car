@@ -51,11 +51,11 @@
             </label>
 
             <label>إيميل الزبون
-              <input id="customerEmail" type="email" placeholder="example@email.com" />
+              <input id="customerEmail" type="email" autocomplete="off" placeholder="مثال: name@email.com" />
             </label>
 
             <label>رمز دخول الزبون
-              <input id="customerPin" inputmode="numeric" placeholder="مثال: 2580" />
+              <input id="customerPin" type="text" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="مثال: 2580" />
             </label>
 
             <label>نوع السيارة
@@ -114,6 +114,34 @@
         </form>
       </section>
 
+
+      <section class="panel media-panel">
+        <div class="panel-head">
+          <div>
+            <h2>إدارة صور الخدمات</h2>
+            <p class="panel-note">إضافة وحذف الصور من لوحة الإدارة فقط.</p>
+          </div>
+        </div>
+        <div class="media-form">
+          <label>اختر الخدمة
+            <select id="mediaServiceSelect">
+              <option value="computer">فحص كمبيوتر</option>
+              <option value="oil">تبديل الزيوت والفلاتر</option>
+              <option value="tpms">TPMS والإطارات</option>
+              <option value="battery">البطاريات</option>
+              <option value="gear">هيدروليك الكير</option>
+              <option value="alignment">تعديل ويل كب</option>
+              <option value="throttle">تنظيف بوابة الهواء</option>
+              <option value="care">عناية شاملة</option>
+            </select>
+          </label>
+          <label class="upload-box">إضافة صور من الاستوديو
+            <input id="serviceImagesInput" type="file" accept="image/*" multiple />
+          </label>
+          <button id="saveServiceImagesBtn" type="button" class="primary">حفظ الصور</button>
+        </div>
+        <div id="serviceImagesPreview" class="service-images-preview"></div>
+      </section>
       <section class="panel records-panel">
         <div class="panel-head records-head">
           <h2>سجلات الصيانة</h2>

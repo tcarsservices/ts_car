@@ -195,3 +195,70 @@ function formatPrice(value){
 function escapeHtml(value=""){
   return String(value).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
 }
+
+
+// إدارة صور الخدمات
+const SERVICE_IMAGES_KEY = "tscar_service_images_v1";
+const mediaServiceSelect = document.getElementById("mediaServiceSelect");
+const serviceImagesInput = document.getElementById("serviceImagesInput");
+const saveServiceImagesBtn = document.getElementById("saveServiceImagesBtn");
+const serviceImagesPreview = document.getElementById("serviceImagesPreview");
+let pendingServiceImages = [];
+
+function loadAllServiceImages(){
+  try{return JSON.parse(localStorage.getItem(SERVICE_IMAGES_KEY)) || {};}
+  catch{return {};}
+}
+function saveAllServiceImages(data){
+  localStorage.setItem(SERVICE_IMAGES_KEY, JSON.stringify(data));
+}
+function renderServiceImages(){
+  if(!mediaServiceSelect || !serviceImagesPreview) return;
+  const all = loadAllServiceImages();
+  const images = all[mediaServiceSelect.value] || [];
+  serviceImagesPreview.innerHTML = images.length ? images.map((src,index)=>`
+    <div class="service-image-item">
+      <img src="${src}" alt="صورة خدمة" />
+      <button type="button" data-remove-service-image="${index}">حذف</button>
+    </div>`).join("") : `<div class="empty">لا توجد صور لهذه الخدمة</div>`;
+  document.querySelectorAll("[data-remove-service-image]").forEach(btn=>btn.addEventListener("click",()=>{
+    const data = loadAllServiceImages();
+    const list = data[mediaServiceSelect.value] || [];
+    list.splice(Number(btn.dataset.removeServiceImage),1);
+    data[mediaServiceSelect.value] = list;
+    saveAllServiceImages(data);
+    renderServiceImages();
+  }));
+}
+async function fileToDataUrl(file){
+  return await new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onload=()=>resolve(reader.result);
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
+  });
+}
+if(mediaServiceSelect){
+  mediaServiceSelect.addEventListener("change",()=>{pendingServiceImages=[];serviceImagesInput.value="";renderServiceImages();});
+  serviceImagesInput.addEventListener("change",async()=>{
+    const files=[...serviceImagesInput.files].filter(f=>f.type.startsWith("image/"));
+    pendingServiceImages=[];
+    for(const file of files.slice(0,6)) pendingServiceImages.push(await fileToDataUrl(file));
+  });
+  saveServiceImagesBtn.addEventListener("click",()=>{
+    if(!pendingServiceImages.length){alert("اختار صورة أو أكثر من الاستوديو أولاً");return;}
+    const data=loadAllServiceImages();
+    const current=data[mediaServiceSelect.value] || [];
+    data[mediaServiceSelect.value]=[...current,...pendingServiceImages].slice(0,8);
+    try{
+      saveAllServiceImages(data);
+      pendingServiceImages=[];
+      serviceImagesInput.value="";
+      renderServiceImages();
+      alert("تم حفظ الصور");
+    }catch{
+      alert("حجم الصور كبير. اختار صور أقل أو أصغر حجماً");
+    }
+  });
+  renderServiceImages();
+}

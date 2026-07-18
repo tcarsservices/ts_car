@@ -34,9 +34,10 @@ function openService(service){
   modalIcon.textContent = service.icon;
   modalTitle.textContent = service.title;
   modalDescription.textContent = service.description;
-  modalGallery.innerHTML = service.gallery
-    .map((item) => `<div class="gallery-placeholder">${item}<br><small>يمكن استبدالها بصورة حقيقية</small></div>`)
-    .join("");
+  const savedImages = getServiceImages(service.id);
+  modalGallery.innerHTML = savedImages.length
+    ? savedImages.map((src) => `<img class="gallery-image" src="${src}" alt="${service.title}" />`).join("")
+    : service.gallery.map((item) => `<div class="gallery-placeholder">${item}<br><small>لم تتم إضافة صورة بعد</small></div>`).join("");
   modal.classList.add("open");
   modal.setAttribute("aria-hidden","false");
   document.body.style.overflow = "hidden";
@@ -58,3 +59,10 @@ const observer = new IntersectionObserver((entries) => {
 },{threshold:.12});
 
 document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+
+function getServiceImages(serviceId){
+  try{
+    const all = JSON.parse(localStorage.getItem("tscar_service_images_v1")) || {};
+    return Array.isArray(all[serviceId]) ? all[serviceId] : [];
+  }catch{return [];}
+}
