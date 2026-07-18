@@ -40,7 +40,7 @@ const importInput = document.getElementById("importInput");
 const recordCount = document.getElementById("recordCount");
 const formTitle = document.getElementById("formTitle");
 
-const fields = ["recordId","customerName","phone","carType","carModel","plateNumber","serviceDate","mileage","oilType","liters","price","replacedParts","lastService","notes"];
+const fields = ["recordId","customerName","phone","customerEmail","customerPin","carType","carModel","plateNumber","serviceDate","mileage","nextMileage","oilType","liters","price","replacedParts","lastService","notes"];
 const el = Object.fromEntries(fields.map(id=>[id,document.getElementById(id)]));
 
 let records = loadRecords();
@@ -59,11 +59,14 @@ function getFormData(){
     id: el.recordId.value || crypto.randomUUID(),
     customerName: el.customerName.value.trim(),
     phone: el.phone.value.trim(),
+    customerEmail: el.customerEmail.value.trim(),
+    customerPin: el.customerPin.value.trim(),
     carType: el.carType.value.trim(),
     carModel: el.carModel.value.trim(),
     plateNumber: el.plateNumber.value.trim(),
     serviceDate: el.serviceDate.value,
     mileage: el.mileage.value,
+    nextMileage: el.nextMileage.value,
     oilType: el.oilType.value.trim(),
     liters: el.liters.value,
     price: el.price.value,
@@ -94,7 +97,7 @@ function resetForm(){
 function renderRecords(query=""){
   const q = query.trim().toLowerCase();
   const filtered = records.filter(r=>[
-    r.customerName,r.phone,r.carType,r.carModel,r.plateNumber,r.oilType,r.replacedParts
+    r.customerName,r.phone,r.customerEmail,r.carType,r.carModel,r.plateNumber,r.oilType,r.replacedParts
   ].join(" ").toLowerCase().includes(q));
   recordCount.textContent = `${filtered.length} سجل`;
   if(!filtered.length){
@@ -115,12 +118,14 @@ function recordTemplate(r){
     <div class="record-grid">
       <div><b>السيارة:</b> ${escapeHtml([r.carType,r.carModel].filter(Boolean).join(" - "))}</div>
       <div><b>رقم السيارة:</b> ${escapeHtml(r.plateNumber||"-")}</div>
-      <div><b>العداد:</b> ${escapeHtml(r.mileage||"-")}</div>
+      <div><b>العداد الحالي:</b> ${formatMileage(r.mileage)}</div>
+      <div><b>عداد الرجوع:</b> ${formatMileage(r.nextMileage)}</div>
       <div><b>الزيت:</b> ${escapeHtml(r.oilType||"-")} ${r.liters?`(${escapeHtml(r.liters)} لتر)`:""}</div>
     </div>
     <div class="record-notes"><b>ما تم تبديله:</b> ${escapeHtml(r.replacedParts||"-")}
 <b>تفاصيل الصيانة:</b> ${escapeHtml(r.lastService||"-")}
-<b>ملاحظات:</b> ${escapeHtml(r.notes||"-")}</div>
+<b>ملاحظات:</b> ${escapeHtml(r.notes||"-")}
+<b>دخول الزبون:</b> ${escapeHtml(r.customerEmail||r.phone||"-")} / الرمز: ${escapeHtml(r.customerPin||"-")}</div>
     <div class="record-actions">
       <button data-edit="${r.id}">تعديل</button>
       <button data-print="${r.id}">طباعة</button>
@@ -149,7 +154,7 @@ function printRecord(id){
   w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>سجل صيانة</title><style>body{font-family:Arial;padding:35px;line-height:1.8}h1{color:#075fc8}.box{border:1px solid #ccc;padding:16px;margin:12px 0;border-radius:10px}b{color:#075fc8}</style></head><body>
   <h1>TS Car - سجل صيانة</h1>
   <div class="box"><b>اسم الزبون:</b> ${escapeHtml(r.customerName)}<br><b>الهاتف:</b> ${escapeHtml(r.phone||"-")}</div>
-  <div class="box"><b>السيارة:</b> ${escapeHtml(r.carType)} ${escapeHtml(r.carModel||"")}<br><b>رقم السيارة:</b> ${escapeHtml(r.plateNumber||"-")}<br><b>التاريخ:</b> ${escapeHtml(r.serviceDate)}<br><b>العداد:</b> ${escapeHtml(r.mileage||"-")}</div>
+  <div class="box"><b>السيارة:</b> ${escapeHtml(r.carType)} ${escapeHtml(r.carModel||"")}<br><b>رقم السيارة:</b> ${escapeHtml(r.plateNumber||"-")}<br><b>التاريخ:</b> ${escapeHtml(r.serviceDate)}<br><b>العداد الحالي:</b> ${formatMileage(r.mileage)}<br><b>عداد الرجوع:</b> ${formatMileage(r.nextMileage)}</div>
   <div class="box"><b>نوع الزيت:</b> ${escapeHtml(r.oilType||"-")}<br><b>عدد اللترات:</b> ${escapeHtml(r.liters||"-")}<br><b>السعر:</b> ${formatPrice(r.price)}</div>
   <div class="box"><b>ما تم تبديله:</b><br>${escapeHtml(r.replacedParts||"-")}<br><br><b>تفاصيل الصيانة:</b><br>${escapeHtml(r.lastService||"-")}<br><br><b>ملاحظات:</b><br>${escapeHtml(r.notes||"-")}</div>
   <p>التقني لخدمات السيارات - 0773 963 6173</p>
@@ -179,6 +184,10 @@ importInput.addEventListener("change",async()=>{
   }catch{alert("ملف النسخة الاحتياطية غير صالح");}
   importInput.value = "";
 });
+function formatMileage(value){
+  const n = Number(value);
+  return Number.isFinite(n)&&value!=="" ? `${n.toLocaleString("ar-IQ")} كم` : "-";
+}
 function formatPrice(value){
   const n = Number(value);
   return Number.isFinite(n)&&value!=="" ? `${n.toLocaleString("ar-IQ")} د.ع` : "-";

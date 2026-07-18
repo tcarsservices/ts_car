@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05070b" />
+  <title>بوابة زبائن TS Car</title>
+  <link rel="stylesheet" href="customer.css" />
+</head>
+<body>
+  <main class="customer-shell">
+    <section class="login-card" id="customerLoginCard">
+      <div class="logo">TS</div>
+      <h1>دخول الزبون</h1>
+      <p>أدخل رقم الهاتف أو الإيميل مع رمز الدخول الذي استلمته من المحل.</p>
+      <form id="customerLoginForm">
+        <label>رقم الهاتف أو الإيميل
+          <input id="customerIdentifier" autocomplete="username" required placeholder="07xxxxxxxxx أو example@email.com" />
+        </label>
+        <label>رمز الدخول
+          <input id="customerPin" type="password" inputmode="numeric" autocomplete="current-password" required placeholder="رمز الدخول" />
+        </label>
+        <button type="submit">عرض سجلي</button>
+        <span id="customerLoginError" class="error"></span>
+      </form>
+      <a href="index.html" class="back-link">الرجوع للموقع الرئيسي</a>
+    </section>
+
+    <section class="portal hidden" id="customerPortal">
+      <header class="portal-head">
+        <div>
+          <span>TS Car</span>
+          <h1 id="welcomeName">أهلاً بك</h1>
+          <p>آخر فاتورة وآخر صيانة مسجلة لسيارتك.</p>
+        </div>
+        <button id="customerLogoutBtn" class="logout">خروج</button>
+      </header>
+
+      <div class="summary-grid" id="summaryGrid"></div>
+      <section class="invoice-card" id="latestInvoice"></section>
+      <section class="history-card">
+        <div class="section-title">
+          <h2>سجل الصيانة</h2>
+          <span id="historyCount"></span>
+        </div>
+        <div id="customerHistory" class="history-list"></div>
+      </section>
+    </section>
+  </main>
+  <script src="customer.js"></script>
+</body>
+</html>
